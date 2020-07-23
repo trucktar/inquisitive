@@ -2,6 +2,10 @@
 
 A RESTful API for a Quiz App service using Django Rest Framework.
 
+> frontend - [visit](https://github.com/muturi254/Quiz_app_fronten)
+
+> Android - [visit](https://github.com/muturi254/Quiz_app_Android)
+
 ## Getting Started
 
 These instructions will get you a copy of this project up and running for local development and testing purposes.
