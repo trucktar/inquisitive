@@ -9,6 +9,7 @@ django-environ = "*"
 psycopg2 = "*"
 djangorestframework = "*"
 pyjwt = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"
