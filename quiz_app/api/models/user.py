@@ -2,8 +2,7 @@ from datetime import datetime, timedelta
 
 import jwt
 from django.conf import settings
-from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
-                                        PermissionsMixin)
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
 
 
@@ -26,13 +25,8 @@ class UserManager(BaseUserManager):
         user.save()
         return user
 
-    def create_superuser(self, username, email, password, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-        return self.create_user(username, email, password, **extra_fields)
 
-
-class User(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser):
     username = models.CharField(max_length=150, unique=True)
     email = models.EmailField(unique=True)
     is_staff = models.BooleanField(default=False)
@@ -40,7 +34,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
 
     def __str__(self):
         """Returns a string representation of `User` instance."""
