@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate
-from rest_framework import serializers
 from django.core.validators import EmailValidator
+from rest_framework import serializers
+
 from .models import User
 
 
@@ -47,8 +48,4 @@ class LoginSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 'A user with this email and password was not found.')
 
-        return {
-            'email': user.email,
-            'username': user.username,
-            'token': user.token
-        }
+        return {'email': user.email, 'token': user.token}
