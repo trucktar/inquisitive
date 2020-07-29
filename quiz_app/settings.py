@@ -25,6 +25,10 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:4200/',
+]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -32,11 +36,13 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'quiz_app.api.ApiConfig',
     'rest_framework',
+    'corsheaders',
 ]
 
 AUTH_USER_MODEL = 'api.User'
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
