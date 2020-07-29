@@ -7,7 +7,7 @@ from .models import User
 class SignupSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['email', 'username', 'password']
+        fields = ['email', 'username', 'first_name', 'last_name', 'password']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -17,8 +17,10 @@ class SignupSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['email', 'username', 'password', 'token']
-        read_only_fields = ['username', 'token']
+        fields = [
+            'email', 'username', 'first_name', 'last_name', 'password', 'token'
+        ]
+        read_only_fields = ['username', 'first_name', 'last_name', 'token']
         extra_kwargs = {
             'password': {
                 'write_only': True
