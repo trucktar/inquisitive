@@ -47,7 +47,7 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     ],
     'NON_FIELD_ERRORS_KEY':
-    'error',
+    'errors',
 }
 
 MIDDLEWARE = [
