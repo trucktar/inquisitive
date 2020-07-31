@@ -11,13 +11,6 @@ class UserManager(BaseUserManager):
         """
         Create and save a user with the given username, email and password.
         """
-        if username is None:
-            raise ValueError('The given username must be set')
-        if email is None:
-            raise ValueError('The given email must be set')
-        if password is None:
-            raise ValueError('The given password must be set')
-
         email = email = self.normalize_email(email)
         username = self.model.normalize_username(username)
         user = self.model(username=username, email=email, **extra_fields)
