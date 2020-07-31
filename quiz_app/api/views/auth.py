@@ -6,45 +6,47 @@ from rest_framework.views import APIView
 from ..serializers import LoginSerializer, SignupSerializer
 
 
+def _handler_422(serializer):
+    """
+    Return a response with status code 422 and application/json content type.
+    """
+    return Response(
+        {
+            'message': 'Validation failed',
+            'errors': [{
+                'field': err,
+                'code': err.code
+            } for err in serializer.errors.pop('errors')]
+        },
+        status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+
 class SignupAPIView(APIView):
-    permission_classes = (AllowAny, )
+    permission_classes = [AllowAny]
     serializer_class = SignupSerializer
     http_method_names = ['post']
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
-        if not serializer.is_valid():
-            return Response(
-                {
-                    'message': 'Registration failed!',
-                    'errors': {
-                        **serializer.errors,
-                    },
-                },
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        serializer.save()
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'message': 'Registration successful'},
+                            status=status.HTTP_201_CREATED)
+        return _handler_422(serializer)
 
 
 class LoginAPIView(APIView):
-    permission_classes = (AllowAny, )
+    permission_classes = [AllowAny]
     serializer_class = LoginSerializer
     http_method_names = ['post']
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
-        if not serializer.is_valid():
-            # Authenticating with invalid credentials returns 401 Unauthorized
+        if serializer.is_valid():
             return Response(
                 {
-                    'message': 'Bad credentials',
-                    'errors': {
-                        **serializer.errors,
-                    },
+                    'message': 'Login successful',
+                    'token': serializer.validated_data['token']
                 },
-                status=status.HTTP_401_UNAUTHORIZED,
-            )
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
+                status=status.HTTP_200_OK)
+        return _handler_422(serializer)
