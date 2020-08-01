@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+from corsheaders.defaults import default_headers
 import environ
 
 env = environ.Env(DEBUG=(bool, False))
@@ -27,6 +28,10 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'location',
+    'noauth',
+]
 # Application definition
 
 INSTALLED_APPS = [
