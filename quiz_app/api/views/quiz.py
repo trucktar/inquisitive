@@ -10,7 +10,7 @@ from ..serializers import AttemptSerializer, QuizSerializer
 class QuizListView(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = QuizSerializer
-    http_method_names = ['get', 'post']
+    http_method_names = ["get", "post"]
 
     def get(self, request):
         quizzes = Quiz.objects.all()
@@ -27,8 +27,8 @@ class QuizListView(APIView):
 
         return Response(
             {
-                'message': 'Quiz creation failed',
-                'errors': {
+                "message": "Quiz creation failed",
+                "errors": {
                     **serializer.errors,
                 },
             },
@@ -39,21 +39,21 @@ class QuizListView(APIView):
 class AttemptView(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = AttemptSerializer
-    http_method_names = ['post']
+    http_method_names = ["post"]
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
-            quiz_id = serializer.validated_data['quiz_id']
+            quiz_id = serializer.validated_data["quiz_id"]
             if Attempt.objects.filter(
-                    quiz_id=quiz_id,
-                    profile=request.user.profile,
+                quiz_id=quiz_id,
+                profile=request.user.profile,
             ).exists():
                 return Response(
                     {
-                        'status': 'error',
-                        'message': 'Quiz has been attempted before',
+                        "status": "error",
+                        "message": "Quiz has been attempted before",
                     },
                     status=status.HTTP_400_BAD_REQUEST,
                 )
@@ -63,9 +63,9 @@ class AttemptView(APIView):
 
         return Response(
             {
-                'status': 'error',
-                'message': 'Attempt creation failed',
-                'errors': {
+                "status": "error",
+                "message": "Attempt creation failed",
+                "errors": {
                     **serializer.errors,
                 },
             },

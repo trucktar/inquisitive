@@ -8,7 +8,7 @@ from .profile import Profile
 
 class Quiz(models.Model):
     title = models.CharField(max_length=60)
-    description = models.TextField(help_text='A description of the quiz')
+    description = models.TextField(help_text="A description of the quiz")
     duration = models.TimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -16,8 +16,8 @@ class Quiz(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ['created_at']
-        verbose_name_plural = 'quizzes'
+        ordering = ["created_at"]
+        verbose_name_plural = "quizzes"
 
     @property
     def questions(self):
@@ -31,7 +31,7 @@ class Quiz(models.Model):
 class Question(models.Model):
     content = models.CharField(
         max_length=1000,
-        help_text='The question text to be displayed',
+        help_text="The question text to be displayed",
     )
 
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
@@ -49,7 +49,7 @@ class Question(models.Model):
 class Answer(models.Model):
     value = models.CharField(
         max_length=1000,
-        help_text='The answer text to be displayed',
+        help_text="The answer text to be displayed",
     )
     is_correct = models.BooleanField(default=False)
 
@@ -61,18 +61,18 @@ class Answer(models.Model):
 
 class Attempt(models.Model):
     user_answers = models.TextField(
-        default='{}',
+        default="{}",
         help_text="JSON object that maps question ids to user answers",
     )
     unanswered = models.CharField(
         max_length=1024,
         validators=[validate_comma_separated_integer_list],
-        help_text='A list of integer ids of all unanswered questions',
+        help_text="A list of integer ids of all unanswered questions",
     )
     incorrect = models.CharField(
         max_length=1024,
         validators=[validate_comma_separated_integer_list],
-        help_text='A list of integer ids of all incorrectly answered questions',
+        help_text="A list of integer ids of all incorrectly answered questions",
     )
     score = models.IntegerField()
 

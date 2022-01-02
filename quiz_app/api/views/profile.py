@@ -10,7 +10,7 @@ from ..serializers import ProfileSerializer
 class ProfileView(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ProfileSerializer
-    http_method_names = ['get', 'put']
+    http_method_names = ["get", "put"]
 
     def get(self, request):
         profile = Profile.objects.get(user=request.user)
@@ -28,8 +28,8 @@ class ProfileView(APIView):
 
         return Response(
             {
-                'message': 'Update failed!',
-                'errors': {
+                "message": "Update failed!",
+                "errors": {
                     **serializer.errors,
                 },
             },

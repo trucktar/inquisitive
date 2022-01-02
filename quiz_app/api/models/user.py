@@ -28,7 +28,7 @@ class User(AbstractBaseUser):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
 
     def __str__(self):
         """Returns a string representation of `User` instance."""
@@ -47,12 +47,9 @@ class User(AbstractBaseUser):
         dt = datetime.now() + timedelta(days=60)
 
         token = jwt.encode(
-            {
-                'id': self.pk,
-                'exp': int(dt.strftime('%s'))
-            },
+            {"id": self.pk, "exp": int(dt.strftime("%s"))},
             settings.SECRET_KEY,
-            algorithm='HS256',
+            algorithm="HS256",
         )
 
         return token.decode()

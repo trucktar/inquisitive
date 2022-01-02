@@ -14,6 +14,7 @@ class JWTAuthentication(authentication.TokenAuthentication):
 
         Authorization: Token 401f7ac837da42b97f613d789819ff93537bee6a
     """
+
     def authenticate_credentials(self, token):
         """
         Attempts to find and return a user using the given token.
@@ -22,16 +23,16 @@ class JWTAuthentication(authentication.TokenAuthentication):
             payload = jwt.decode(
                 token,
                 settings.SECRET_KEY,
-                algorithms=['HS256'],
+                algorithms=["HS256"],
             )
         except:
-            msg = 'Invalid or expired token.'
+            msg = "Invalid or expired token."
             raise exceptions.AuthenticationFailed(msg)
 
         try:
-            user = User.objects.get(pk=payload['id'])
+            user = User.objects.get(pk=payload["id"])
         except User.DoesNotExist:
-            msg = 'Token contained no recognizable user identification.'
+            msg = "Token contained no recognizable user identification."
             raise exceptions.AuthenticationFailed(msg)
 
         return (user, token)
