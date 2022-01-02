@@ -10,10 +10,18 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-from corsheaders.defaults import default_headers
+from pathlib import Path
+
 import environ
+from corsheaders.defaults import default_headers
 
 env = environ.Env(DEBUG=(bool, False))
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variable definitions from .env
+environ.Env.read_env(BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
